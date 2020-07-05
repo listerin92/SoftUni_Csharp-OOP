@@ -2,19 +2,15 @@
 
 namespace Cars
 {
-    public class Tesla : IElectricCar, ICar
+    public class Tesla : Car, IElectricCar, ICar
     {
         public Tesla(string model, string color, int battery)
+        :base (model, color)
         {
-            this.Model = model;
-            this.Color = color;
             this.Battery = battery;
         }
         public int Battery { get; set; }
-        public string Model { get; set; }
-        public string Color { get; set; }
-        public string Start { get; } = "Engine start";
-        public string Stop { get; } = "Breaaak!";
+
 
         public override string ToString()
         {
