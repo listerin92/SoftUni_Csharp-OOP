@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace BirthdayCelebrations
+namespace FoodShortage
 {
     public class Engine
     {
@@ -52,7 +52,7 @@ namespace BirthdayCelebrations
             {
                 Console.WriteLine("");
             }
-            
+
         }
     }
 }

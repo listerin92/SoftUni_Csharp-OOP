@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BirthdayCelebrations
+namespace FoodShortage
 {
-    public class Citizen : Identification, IBirthable
+    public class Pet : Identification, IBirthable 
     {
-        private string id;
         private string birthday;
 
-        public Citizen(string name, int age, string id, DateTime birthday)
-        : base(name, age, id, birthday)
+        public Pet(string name, DateTime birthday) : base(name, birthday)
         {
         }
 
