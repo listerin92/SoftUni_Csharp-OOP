@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace FoodShortage
 {
-    public class Pet : Identification, IBirthable 
+    public class Pet : Identification 
     {
         private string birthday;
 
