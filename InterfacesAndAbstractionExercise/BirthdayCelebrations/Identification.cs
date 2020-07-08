@@ -12,7 +12,7 @@ namespace BirthdayCelebrations
         private int age;
         private string id;
 
-        public Identification(string name, string id)
+        protected Identification(string name, string id)
         {
             this.Name = name;
             this.Id = id;
@@ -33,7 +33,7 @@ namespace BirthdayCelebrations
         public int Age
         {
             get => this.age;
-            set
+            private set
             {
                 if (value < 0)
                 {
@@ -46,7 +46,7 @@ namespace BirthdayCelebrations
         public string Id
         {
             get => this.id;
-            set
+            private set
             {
                 if (value.Any(char.IsLetter) || string.IsNullOrEmpty(value))
                 {
@@ -58,11 +58,11 @@ namespace BirthdayCelebrations
         public DateTime Birthday
         {
             get => this.birthday;
-            set
+            private set
             {
                 DateTime date;
                 bool validate = DateTime.TryParse(
-                    value.ToString(), 
+                    value.ToString(),
                     out date);
                 //Regex reg = new Regex(@"\d{2}\/\d{2}\/\d{4}");
                 if (!validate)
@@ -76,7 +76,7 @@ namespace BirthdayCelebrations
         public string Name
         {
             get => this.name;
-            set
+            private set
             {
                 if (value.Length < 1)
                 {

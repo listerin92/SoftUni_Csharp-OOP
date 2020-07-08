@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using BirthdayCelebrations.Core;
+using MilitaryElite.IO.Contracts;
 
 namespace BirthdayCelebrations
 {
-    public class Engine
+    public class Engine : IEngine
     {
+        private readonly IReader reader;
+        private readonly IWriter writer;
+        public Engine(IReader reader, IWriter writer)
+        {
+            this.reader = reader;
+            this.writer = writer;
+        }
         public void Run()
         {
+
             string command;
             List<IBirthable> birthdays = new List<IBirthable>();
-            while ((command = Console.ReadLine()) != "End")
+            Citizen citizen = null;
+            Pet pet = null;
+            while ((command = this.reader.ReadLine()) != "End")
             {
                 string[] cmdArgs = command
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -22,7 +34,7 @@ namespace BirthdayCelebrations
                     int citizenAge = int.Parse(cmdArgs[2]);
                     string citizenId = cmdArgs[3];
                     DateTime citizenBirthday = DateTime.ParseExact(cmdArgs[4], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    Citizen citizen = new Citizen(citizenName, citizenAge, citizenId, citizenBirthday);
+                    citizen = new Citizen(citizenName, citizenAge, citizenId, citizenBirthday);
                     birthdays.Add(citizen);
                 }
                 else if (cmdArgs[0] == "Robot")
@@ -35,24 +47,24 @@ namespace BirthdayCelebrations
                 {
                     string petName = cmdArgs[1];
                     DateTime petBirthday = DateTime.ParseExact(cmdArgs[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    Pet pet = new Pet(petName, petBirthday);
+                    pet = new Pet(petName, petBirthday);
                     birthdays.Add(pet);
                 }
             }
 
-            string specificYear = Console.ReadLine();
+            string specificYear = this.reader.ReadLine();
             if (birthdays.Any(x => x.GetBirthDay().EndsWith(specificYear ?? string.Empty)))
             {
                 foreach (var id in birthdays.FindAll(x => x.GetBirthDay().EndsWith(specificYear)))
                 {
-                    Console.WriteLine(id.GetBirthDay());
+                    this.writer.WriteLine(id.GetBirthDay());
                 }
             }
             else
             {
-                Console.WriteLine("");
+                this.writer.WriteLine("");
             }
-            
+
         }
     }
 }
