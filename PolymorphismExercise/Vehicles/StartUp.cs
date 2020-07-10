@@ -1,5 +1,7 @@
 ﻿using System;
 using Vehicles.Core.Contracts;
+using Vehicles.IO;
+using Vehicles.IO.Contracts;
 
 namespace Vehicles
 {
@@ -7,7 +9,9 @@ namespace Vehicles
     {
         static void Main(string[] args)
         {
-            IEngine engine = new Engine();
+            IReader reader = new ConsoleReader();
+            IWriter writer = new ConsoleWriter();
+            IEngine engine = new Engine(reader, writer);
             engine.Run();
         }
     }

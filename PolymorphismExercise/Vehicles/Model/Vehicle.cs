@@ -8,26 +8,14 @@ namespace Vehicles.Model
 {
     public abstract class Vehicle : IDrivable, IRefuelable
     {
-        private double fuelQuantity;
-        private double fuelConsumption;
-
         public Vehicle(double fuelQuantity, double litersPerKm)
         {
             this.FuelQuantity = fuelQuantity;
             this.FuelConsumption = litersPerKm;
         }
 
-        public double FuelQuantity
-        {
-            get => this.fuelQuantity;
-            protected set => this.fuelQuantity = value;
-        }
-
-        public virtual double FuelConsumption
-        {
-            get => this.fuelConsumption;
-            protected set => this.fuelConsumption = value;
-        }
+        public double FuelQuantity { get; protected set; }
+        public virtual double FuelConsumption { get; protected set; }
 
         public string Drive(double distanceToDrive)
         {
