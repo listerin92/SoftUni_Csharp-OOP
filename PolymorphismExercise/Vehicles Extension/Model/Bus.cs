@@ -1,6 +1,5 @@
 ﻿using System;
 using Vehicles.Exceptions;
-using Vehicles.Model;
 
 namespace VehiclesExtension.Model
 {
@@ -10,6 +9,7 @@ namespace VehiclesExtension.Model
             : base(fuelQuantity, litersPerKm, tankCapacity)
         {
         }
+
         public override string Drive(double distanceToDrive)
         {
             double consumedFuel = distanceToDrive * (this.FuelConsumption + 1.4);
@@ -22,5 +22,6 @@ namespace VehiclesExtension.Model
             this.FuelQuantity -= consumedFuel;
             return $"{this.GetType().Name} travelled {distanceToDrive} km";
         }
+
     }
 }

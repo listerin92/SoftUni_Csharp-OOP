@@ -1,7 +1,7 @@
 ﻿using System;
-using Vehicles.IO.Contracts;
+using VehiclesExtension.IO.Contracts;
 
-namespace Vehicles.IO
+namespace VehiclesExtension.IO
 {
     public class ConsoleReader : IReader
     {

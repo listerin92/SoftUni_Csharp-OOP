@@ -1,4 +1,4 @@
-﻿namespace Vehicles.Core.Contracts
+﻿namespace VehiclesExtension.Core.Contracts
 {
     interface IEngine
     {

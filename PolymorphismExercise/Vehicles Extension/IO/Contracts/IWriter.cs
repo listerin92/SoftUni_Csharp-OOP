@@ -1,4 +1,4 @@
-﻿namespace Vehicles.IO.Contracts
+﻿namespace VehiclesExtension.IO.Contracts
 {
     public interface IWriter
     {

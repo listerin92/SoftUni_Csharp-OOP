@@ -1,9 +1,9 @@
 ﻿using System;
+using Vehicles;
 using Vehicles.Exceptions;
-using Vehicles.Model;
 using VehiclesExtension.Model;
 
-namespace Vehicles.Factories
+namespace VehiclesExtension.Factories
 {
     public class VehicleFactory
     {

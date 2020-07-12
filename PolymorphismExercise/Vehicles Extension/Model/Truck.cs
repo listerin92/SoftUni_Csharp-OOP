@@ -1,6 +1,4 @@
-﻿using Vehicles.Model;
-
-namespace Vehicles
+﻿namespace VehiclesExtension.Model
 {
     public class Truck : Vehicle
     {
@@ -18,9 +16,10 @@ namespace Vehicles
             protected set => base.FuelConsumption = value + SUMMER_AIRCOND_CONSUMPTION_INDEX;
         }
 
-        public override void Refuel(double amountToRefuel)
-        {
-            base.Refuel(amountToRefuel);/* * PUNCH_IN_THE_RESERVOAR_PERCENTAGE)*/;
-        }
+        //public override void Refuel(double amountToRefuel)
+        //{
+        //    base.Refuel(amountToRefuel);
+        //    /* looks like it is without punch * PUNCH_IN_THE_RESERVOAR_PERCENTAGE)*/;
+        //}
     }
 }

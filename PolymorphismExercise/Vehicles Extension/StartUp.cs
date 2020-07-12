@@ -1,9 +1,9 @@
-﻿using System;
-using Vehicles.Core.Contracts;
-using Vehicles.IO;
-using Vehicles.IO.Contracts;
+﻿using VehiclesExtension.Core;
+using VehiclesExtension.Core.Contracts;
+using VehiclesExtension.IO;
+using VehiclesExtension.IO.Contracts;
 
-namespace Vehicles
+namespace VehiclesExtension
 {
     public class StartUp
     {

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Vehicles.Contracts;
 using Vehicles.Exceptions;
 
-namespace Vehicles.Model
+namespace VehiclesExtension.Model
 {
     public abstract class Vehicle : IDrivable, IRefuelable
     {
-        private double fuelQuantity;
         private double tankCapacity;
+        private double fuelQuantity;
+        private double fuelConsumption;
 
         public Vehicle(double fuelQuantity, double litersPerKm, double tankCapacity)
         {
@@ -20,26 +19,46 @@ namespace Vehicles.Model
 
         public double FuelQuantity
         {
-            get => this.fuelQuantity;
+            get => fuelQuantity;
             protected set
             {
                 this.fuelQuantity = value;
+
+                if (value < 0)
+                {
+                    this.fuelQuantity = 0;
+                    string msg = ExceptionMessages.NegativeFuelException;
+                    throw new InvalidOperationException(msg);
+                }
             }
         }
 
-        public virtual double FuelConsumption { get; protected set; }
+        public virtual double FuelConsumption
+        {
+            get => fuelConsumption;
+            protected set
+            {
+                this.fuelConsumption = value;
+
+                if (value <= 0)
+                {
+                    this.fuelConsumption = 0;
+                    string msg = ExceptionMessages.NegativeFuelException;
+                    throw new InvalidOperationException(msg);
+                }
+            }
+        }
 
         public double TankCapacity
         {
             get => tankCapacity;
             protected set
             {
-                tankCapacity = value;
-
-                if (this.FuelQuantity > this.TankCapacity)
+                if (this.FuelQuantity > value)
                 {
                     this.FuelQuantity = 0;
                 }
+                tankCapacity = value;
             }
         }
 
@@ -64,9 +83,9 @@ namespace Vehicles.Model
                 throw new InvalidOperationException(msg);
 
             }
-
             this.FuelQuantity -= consumedFuel;
             return $"{this.GetType().Name} travelled {distanceToDrive} km";
+
         }
         public virtual void Refuel(double amountToRefuel)
         {
@@ -76,7 +95,7 @@ namespace Vehicles.Model
                 throw new InvalidOperationException(msg);
             }
 
-            if (amountToRefuel + this.FuelQuantity > this.TankCapacity)
+            if (amountToRefuel > this.TankCapacity - this.FuelQuantity)
             {
                 string msg = String.Format(ExceptionMessages.TooMuchFuelException, amountToRefuel);
                 throw new InvalidOperationException(msg);

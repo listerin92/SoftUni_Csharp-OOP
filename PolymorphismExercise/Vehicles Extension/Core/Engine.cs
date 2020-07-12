@@ -1,10 +1,10 @@
 ﻿using System;
-using Vehicles.Core.Contracts;
-using Vehicles.Factories;
-using Vehicles.IO.Contracts;
-using Vehicles.Model;
+using VehiclesExtension.Core.Contracts;
+using VehiclesExtension.Factories;
+using VehiclesExtension.IO.Contracts;
+using VehiclesExtension.Model;
 
-namespace Vehicles
+namespace VehiclesExtension.Core
 {
     public class Engine : IEngine
     {
@@ -46,7 +46,7 @@ namespace Vehicles
             }
 
             writer.WriteLine(car.ToString());
-            writer.WriteLine(truck.ToString()); 
+            writer.WriteLine(truck.ToString());
             writer.WriteLine(bus.ToString());
         }
 
@@ -98,7 +98,7 @@ namespace Vehicles
 
         private Vehicle ProduceVehicle(IReader read)
         {
-            string[] vehicleArgs = read.ReadLine().Split(' ');
+            string[] vehicleArgs = read.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
             string type = vehicleArgs[0];
             double fuelQuantity = double.Parse(vehicleArgs[1]);
             double fuelConsumption = double.Parse(vehicleArgs[2]);
@@ -107,6 +107,5 @@ namespace Vehicles
             Vehicle vehicle = this.vehicleFactory.ProduceVehicle(type, fuelQuantity, fuelConsumption, tankCapacity);
             return vehicle;
         }
-
     }
 }
