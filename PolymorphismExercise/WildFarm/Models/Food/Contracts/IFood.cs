@@ -1,6 +1,6 @@
 ﻿namespace WildFarm.Models.Food.Contracts
 {
-    interface IFood
+    public interface IFood
     {
     }
 }

@@ -28,13 +28,13 @@ namespace WildFarm.Core
         }
         public void Run()
         {
-            string command = string.Empty;
-            while ((command = reader.ReadLine())!= "End")
+            string cmdLineOne;
+            while ((cmdLineOne = reader.ReadLine()) != "End")
             {
 
-                Animal animal = this.animalFactory.ProduceAnimal(command);
-                string command2 = reader.ReadLine();
-                Food food = this.animalFactory.ProduceFood(command2);
+                Animal animal = this.animalFactory.ProduceAnimal(cmdLineOne);
+                string cmdLineTwo = reader.ReadLine();
+                Food food = this.animalFactory.ProduceFood(cmdLineTwo);
                 writer.WriteLine(animal.AskForFood());
 
                 try
@@ -43,7 +43,7 @@ namespace WildFarm.Core
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    writer.WriteLine(ex.Message);
                 }
                 animals.Add(animal);
 

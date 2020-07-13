@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using WildFarm.Exceptions;
 
 namespace WildFarm.Models.Mammal
@@ -20,20 +21,14 @@ namespace WildFarm.Models.Mammal
         {
             return "Woof!";
         }
-        public override void Feed(Food.Food food)
-        {
-            if (food.GetType().Name == "Meat")
+
+        public override double WeightMultiplier => dogIncreaseFactor;
+
+        public override ICollection<Type> PreferredFoods =>
+            new List<Type>()
             {
-                this.FoodEaten = food.Quantity;
-                this.Weight += food.Quantity * dogIncreaseFactor;
-            }
-            else
-            {
-                string msg = string.Format(ExceptionMessages.InvalidFoodExceptionMessage, this.GetType().Name,
-                    food.GetType().Name);
-                throw new InvalidOperationException(msg);
-            }
-        }
+                typeof(Meat)
+            };
 
         public override string ToString()
         {

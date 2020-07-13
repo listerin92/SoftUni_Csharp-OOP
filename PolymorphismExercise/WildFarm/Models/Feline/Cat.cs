@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using WildFarm.Exceptions;
 
 namespace WildFarm.Models.Feline
@@ -23,25 +24,18 @@ namespace WildFarm.Models.Feline
             }
         }
 
+        public override double WeightMultiplier => catIncreaseFactor;
+
+        public override ICollection<Type> PreferredFoods =>
+        new List<Type>()
+        {
+            typeof(Vegetable)
+            ,typeof(Meat)
+        };
+
         public override string AskForFood()
         {
             return "Meow";
-        }
-
-        public override void Feed(Food.Food food)
-        {
-            if (food.GetType().Name == "Vegetable" ||
-                food.GetType().Name == "Meat")
-            {
-                this.FoodEaten = food.Quantity;
-                this.Weight += food.Quantity * catIncreaseFactor;
-            }
-            else
-            {
-                string msg = string.Format(ExceptionMessages.InvalidFoodExceptionMessage, this.GetType().Name,
-                    food.GetType().Name);
-                throw new InvalidOperationException(msg);
-            }
         }
 
         public override string ToString()

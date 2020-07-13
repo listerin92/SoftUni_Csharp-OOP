@@ -36,6 +36,11 @@ namespace WildFarm.Factory
                 livingRegion = animalArgs[3];
                 animal = new Mouse(name, weight, livingRegion);
             }
+            else if (type == "Dog")
+            {
+                livingRegion = animalArgs[3];
+                animal = new Dog(name, weight, livingRegion);
+            }
             else if (type == "Cat")
             {
                 livingRegion = animalArgs[3];
@@ -48,11 +53,6 @@ namespace WildFarm.Factory
                 breed = animalArgs[4];
                 animal = new Tiger(name, weight, livingRegion, breed);
             }
-            else if (type == "Dog")
-            {
-                livingRegion = animalArgs[3];
-                animal = new Dog(name, weight, livingRegion);
-            }
             if (animal == null)
             {
                 throw new ArgumentException(ExceptionMessages.InvalidTypeExceptionMessage);
@@ -64,27 +64,27 @@ namespace WildFarm.Factory
         public Food ProduceFood(string command)
         {
             string[] foodArgs = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            string vegitableName = foodArgs[0];
+            string vegetableName = foodArgs[0];
             int quantity = int.Parse(foodArgs[1]);
             Food food = null;
-            if (vegitableName == "Vegetable")
+            if (vegetableName == "Vegetable")
             {
                 food = new Vegetable(quantity);
             }
-            else if (vegitableName == "Fruit")
+            else if (vegetableName == "Fruit")
             {
                 food = new Fruit(quantity);
             }
-            else if (vegitableName == "Meat")
+            else if (vegetableName == "Meat")
             {
                 food = new Meat(quantity);
             }
-            else if (vegitableName == "Seeds")
+            else if (vegetableName == "Seeds")
             {
                 food = new Seeds(quantity);
             }
 
-            if (vegitableName == null)
+            if (vegetableName == null)
             {
                 throw new ArgumentException(ExceptionMessages.InvalidTypeExceptionMessage);
             }

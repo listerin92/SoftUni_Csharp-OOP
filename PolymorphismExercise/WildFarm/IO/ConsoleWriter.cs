@@ -14,5 +14,10 @@ namespace VehiclesExtension.IO
         {
             Console.WriteLine(text);
         }
+
+        public void WriteLine(Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 }
