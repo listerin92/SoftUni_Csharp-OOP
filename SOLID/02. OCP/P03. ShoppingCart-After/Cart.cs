@@ -22,7 +22,7 @@
             get { return new List<OrderItem>(this.items); }
         }
 
-        public string CustmerEmail { get; set; }
+        public string CustоmerEmail { get; set; }
 
         public void Add(OrderItem orderItem)
         {
