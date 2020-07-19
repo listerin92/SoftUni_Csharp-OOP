@@ -9,7 +9,7 @@ namespace Logger.Factories
 {
     public class AppenderFactory
     {
-        private LayoutFactory layoutFactory;
+        private readonly LayoutFactory layoutFactory;
 
         public AppenderFactory()
         {

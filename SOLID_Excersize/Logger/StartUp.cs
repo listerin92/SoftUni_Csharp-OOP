@@ -29,7 +29,7 @@ namespace Logger
 
             for (int i = 0; i < appendersCount; i++)
             {
-                string[] appendersArg = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
+                string[] appendersArg = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
 
                 string appenderType = appendersArg[0];
                 string layoutType = appendersArg[1];

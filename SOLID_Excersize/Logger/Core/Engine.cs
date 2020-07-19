@@ -17,7 +17,7 @@ namespace Logger.Core
         }
 
         public Engine(ILogger logger)
-        : this()
+            : this()
         {
             this.logger = logger;
         }
@@ -26,10 +26,14 @@ namespace Logger.Core
             string input;
             while ((input = Console.ReadLine()) != "END")
             {
-                string[] inputArgs = input.Split('|', StringSplitOptions.RemoveEmptyEntries).ToArray();
+                string[] inputArgs = input
+                    .Split('|', StringSplitOptions.RemoveEmptyEntries)
+                    .ToArray();
+
                 string level = inputArgs[0];
                 string datetime = inputArgs[1];
                 string message = inputArgs[2];
+
                 try
                 {
                     IError error = this.errorFactory.ProduceError(datetime, message, level);

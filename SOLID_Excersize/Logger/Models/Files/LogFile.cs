@@ -18,19 +18,16 @@ namespace Logger.Models.Files
             this.IOManager = new IOManager(folderName, fileName);
             this.IOManager.EnsureDirectoryAndFileExist();
         }
-        public void Write()
-        {
-
-        }
-
         public ILayout Layout { get; }
         public string Path => this.IOManager.CurrentFilePath;
         public long Size => this.GetFileSize();
+
         /// <summary>
-        /// Returns formatted message in provided layout with provied error's data
+        /// Create formatted message in provided layout with provided error's data
         /// </summary>
-        /// <param name="error"></param>
-        /// <returns></returns>
+        /// <param name="layout">Provide layout</param>
+        /// <param name="error">Provide error</param>
+        /// <returns>Returns formatted message</returns>
         public string Write(ILayout layout, IError error)
         {
             string format = layout.Format;
@@ -48,7 +45,7 @@ namespace Logger.Models.Files
         private long GetFileSize()
         {
             string text = File.ReadAllText(this.Path);
-            long size = (long)text
+            long size = text
                 .Where(char.IsLetter)
                 .Sum(ch => ch);
             return size;

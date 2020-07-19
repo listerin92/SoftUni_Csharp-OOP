@@ -24,9 +24,7 @@ namespace Logger.Models.IOManagement
         public string CurrentFilePath => this.CurrentDirectoryPath + this.fileName;
         public string GetCurrentDirectory()
         {
-            string currentDir = Directory.GetCurrentDirectory();
-
-            return currentDir;
+            return Directory.GetCurrentDirectory();
         }
         public void EnsureDirectoryAndFileExist()
         {
