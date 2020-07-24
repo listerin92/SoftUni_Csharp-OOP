@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace Tests
 {
+    [TestFixture]
     public class ExtendedDatabaseTests
     {
         private ExtendedDatabase.ExtendedDatabase database;
@@ -41,7 +42,7 @@ namespace Tests
                 new Person(1, "Ivan"), new Person(1, "Ivan"), new Person(1, "Ivan"), new Person(1, "Ivan"),
                 new Person(1, "Ivan"), new Person(1, "Ivan"), new Person(1, "Ivan"), new Person(1, "Ivan"),
                 new Person(1, "Ivan")
-        };
+            };
             Assert.Throws<ArgumentException>(() =>
             {
                 this.database = new ExtendedDatabase.ExtendedDatabase(fullPersons);
