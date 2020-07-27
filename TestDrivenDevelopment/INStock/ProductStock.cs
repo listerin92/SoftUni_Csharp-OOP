@@ -20,7 +20,8 @@ namespace INStock
             this.productsByIndex = new List<IProduct>();
             this.productByLabel = new Dictionary<string, IProduct>();
             this.productsByQuantity = new Dictionary<int, List<IProduct>>();
-            this.productSortedByPrice = new SortedDictionary<decimal, List<IProduct>>(Comparer<decimal>.Create((first, second) => second.CompareTo(first))); //OppositeSort
+            this.productSortedByPrice = new SortedDictionary<decimal, List<IProduct>>(Comparer<decimal>
+                .Create((first, second) => second.CompareTo(first))); //OppositeSort
         }
 
         public int Count => this.productsByIndex.Count;
@@ -140,7 +141,7 @@ namespace INStock
             get => this.Find(index);
             set
             {
-                this.ValidateNullProduct(value);
+                ValidateNullProduct(value);
 
                 this.RemoveProductFromCollections(this.Find(index));
 
@@ -149,7 +150,7 @@ namespace INStock
                 this.productsByIndex[index] = value;
             }
         }
-        private void ValidateNullProduct(IProduct product)
+        private static void ValidateNullProduct(IProduct product)
         {
             if (product == null)
             {
