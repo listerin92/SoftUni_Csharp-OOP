@@ -11,7 +11,7 @@ namespace Chainblock.Core
     public class Chainblock : IChainblock
     {
         private readonly ICollection<ITransaction> transactions;
-        
+
         public Chainblock()
         {
             this.transactions = new List<ITransaction>();
@@ -40,17 +40,30 @@ namespace Chainblock.Core
 
         public void ChangeTransactionStatus(int id, TransactionStatus newStatus)
         {
-            throw new System.NotImplementedException();
+            ITransaction transaction = this.transactions.FirstOrDefault(t => t.Id == id);
+            if (transaction == null)
+            {
+                throw new ArgumentException(ExceptionMessages.NotExistingTransactionMessage);
+            }
+
+            transaction.Status = newStatus;
         }
 
         public void RemoveTransactionById(int id)
         {
-            throw new System.NotImplementedException();
+            ITransaction transaction = this.GetById(id);
+            this.transactions.Remove(transaction);
         }
 
         public ITransaction GetById(int id)
         {
-            throw new System.NotImplementedException();
+            ITransaction transaction = this.transactions.FirstOrDefault(t => t.Id == id);
+            if (transaction == null)
+            {
+                throw new InvalidOperationException(ExceptionMessages.NotExistingTransactionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetByTransactionStatus(TransactionStatus status)

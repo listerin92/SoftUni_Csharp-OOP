@@ -10,11 +10,12 @@ namespace Chainblock.Tests
     public class ChainblockTests
     {
         private IChainblock chainblock;
-
+        private ITransaction testTransaction;
         [SetUp]
         public void Initializer()
         {
             chainblock = new Core.Chainblock();
+            testTransaction = new Transaction(1, TransactionStatus.Unauthorized, "Pesho", "Gosho", 10.0);
         }
         [Test]
         public void IfConstructorWorksCorrectly()
@@ -92,6 +93,88 @@ namespace Chainblock.Tests
             //this.chainblock.Add(transaction);
 
             Assert.IsFalse(this.chainblock.Contains(id));
+        }
+
+        [Test]
+        public void TestChangingTransactionStatusOfExistingTransaction()
+        {
+            TransactionStatus newStatus = TransactionStatus.Successfull;
+            ITransaction transaction = new Transaction(1, TransactionStatus.Unauthorized, "Pesho", "Gosho", 10.0);
+            this.chainblock.Add(transaction);
+
+            this.chainblock.ChangeTransactionStatus(1, newStatus);
+            Assert.AreEqual(newStatus, transaction.Status);
+        }
+        [Test]
+        public void TestChangingTransactionStatusOfNonExistingTransaction()
+        {
+            int fakeID = 222;
+            TransactionStatus newStatus = TransactionStatus.Successfull;
+            ITransaction transaction = new Transaction(1, TransactionStatus.Unauthorized, "Pesho", "Gosho", 10.0);
+
+            this.chainblock.Add(transaction);
+
+            Assert.That(() =>
+            {
+                this.chainblock.ChangeTransactionStatus(fakeID, newStatus);
+
+            }, Throws.ArgumentException
+                .With.Message
+                .EqualTo(ExceptionMessages
+                    .NotExistingTransactionMessage));
+        }
+
+        [Test]
+        public void TestRemoveTransactionById()
+        {
+            int id = 2;
+            TransactionStatus status = TransactionStatus.Successfull;
+            ITransaction transaction = new Transaction(id, status, "Sender", "Receiver", 20.0);
+
+            this.chainblock.Add(this.testTransaction);
+            this.chainblock.Add(transaction);
+            this.chainblock.RemoveTransactionById(1);
+
+            ITransaction returnTransaction = this.chainblock.GetById(id);
+
+            Assert.That(returnTransaction.Id, Is.EqualTo(id));
+            Assert.That(returnTransaction.Status, Is.EqualTo(status));
+            Assert.That(returnTransaction.From, Is.EqualTo("Sender"));
+            Assert.That(returnTransaction.To, Is.EqualTo("Receiver"));
+            Assert.That(returnTransaction.Amount, Is.EqualTo(20.0));
+        }
+
+        [Test]
+        public void GetByIDShouldThrowExceptionWhenNotFoundID()
+        {
+            int fakeId = 2;
+
+            this.chainblock.Add(this.testTransaction);
+            Assert.That(() =>
+            {
+                ITransaction returnTransaction = this.chainblock.GetById(fakeId);
+
+            }, Throws.InvalidOperationException
+                .With.Message
+                .EqualTo(ExceptionMessages
+                    .NotExistingTransactionMessage));
+        }
+        [Test]
+        public void GetByIDShouldReturnCorrectTransaction()
+        {
+            int id = 2;
+            TransactionStatus status = TransactionStatus.Successfull;
+            ITransaction transaction = new Transaction(id, status, "Sender", "Receiver", 20.0);
+
+            this.chainblock.Add(this.testTransaction);
+            this.chainblock.Add(transaction);
+            ITransaction returnTransaction = this.chainblock.GetById(id);
+
+            Assert.That(returnTransaction.Id, Is.EqualTo(id));
+            Assert.That(returnTransaction.Status, Is.EqualTo(status));
+            Assert.That(returnTransaction.From, Is.EqualTo("Sender"));
+            Assert.That(returnTransaction.To, Is.EqualTo("Receiver"));
+            Assert.That(returnTransaction.Amount, Is.EqualTo(20.0));
         }
     }
 }
