@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using Chainblock.Common;
 using Chainblock.Models;
 using Chainblock.Contracts;
@@ -51,8 +52,15 @@ namespace Chainblock.Core
 
         public void RemoveTransactionById(int id)
         {
-            ITransaction transaction = this.GetById(id);
-            this.transactions.Remove(transaction);
+            try
+            {
+                ITransaction transaction = this.GetById(id);
+                this.transactions.Remove(transaction);
+            }
+            catch (InvalidOperationException ioe)
+            {
+                throw new InvalidOperationException(ExceptionMessages.RemovingNonExistingTransactionMessage, ioe);
+            }
         }
 
         public ITransaction GetById(int id)
@@ -68,37 +76,86 @@ namespace Chainblock.Core
 
         public IEnumerable<ITransaction> GetByTransactionStatus(TransactionStatus status)
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions.Where(t => t.Status == status).OrderByDescending(tx => tx.Amount);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NotExistingTransactionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<string> GetAllSendersWithTransactionStatus(TransactionStatus status)
         {
-            throw new System.NotImplementedException();
+            var senderTransactions = this.GetByTransactionStatus(status)
+                .Select(tx => tx.From);
+            return senderTransactions;
         }
 
         public IEnumerable<string> GetAllReceiversWithTransactionStatus(TransactionStatus status)
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions
+                .Where(t => t.Status == status)
+                .OrderByDescending(tx => tx.Amount)
+                .Select(tx => tx.To);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetAllOrderedByAmountDescendingThenById()
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions
+                .OrderByDescending(tx => tx.Amount)
+                .ThenBy(tx => tx.Id);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetBySenderOrderedByAmountDescending(string sender)
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions
+                .Where(tx => tx.From == sender)
+                .OrderByDescending(tx => tx.Amount);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetByReceiverOrderedByAmountThenById(string receiver)
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions
+                .Where(tx => tx.To == receiver)
+                .OrderByDescending(tx => tx.Amount);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
+            }
+
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetByTransactionStatusAndMaximumAmount(TransactionStatus status, double amount)
         {
-            throw new System.NotImplementedException();
+            var transaction = this.transactions
+                .Where((txs) => txs.Status == status && txs.Amount <= amount)
+                .OrderByDescending(tx => tx.Amount);
+            if (!transaction.Any())
+            {
+                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
+            }
+            //TODO
+            return transaction;
         }
 
         public IEnumerable<ITransaction> GetBySenderAndMinimumAmountDescending(string sender, double amount)
@@ -117,7 +174,10 @@ namespace Chainblock.Core
         }
         public IEnumerator<ITransaction> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            for (int i = 0; i < this.Count; i++)
+            {
+                yield return this.transactions.ToArray()[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
