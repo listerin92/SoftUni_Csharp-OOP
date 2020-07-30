@@ -281,7 +281,6 @@ namespace Chainblock.Tests
                 .EqualTo(ExceptionMessages
                     .NotExistingTransactionMessage));
         }
-
         [Test]
         public void GettingAllReceiversWithTransactionStatus()
         {
@@ -391,7 +390,6 @@ namespace Chainblock.Tests
                 .ThenBy(tr => tr.Id);
             CollectionAssert.AreEqual(expTransactionOut, actTransactions);
         }
-
         [Test]
         public void GetByReceiverOrderedByAmountThenByIdCorrect()
         {
@@ -419,7 +417,6 @@ namespace Chainblock.Tests
                 .OrderByDescending(tx => tx.Amount);
             CollectionAssert.AreEqual(expTransactionOut, actTransactions);
         }
-
         [Test]
         public void TestChainblockEnumerator()
         {

@@ -124,11 +124,6 @@ namespace Chainblock.Core
             var transaction = this.transactions
                 .Where(tx => tx.From == sender)
                 .OrderByDescending(tx => tx.Amount);
-            if (!transaction.Any())
-            {
-                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
-            }
-
             return transaction;
         }
 
@@ -137,11 +132,6 @@ namespace Chainblock.Core
             var transaction = this.transactions
                 .Where(tx => tx.To == receiver)
                 .OrderByDescending(tx => tx.Amount);
-            if (!transaction.Any())
-            {
-                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
-            }
-
             return transaction;
         }
 
@@ -150,11 +140,7 @@ namespace Chainblock.Core
             var transaction = this.transactions
                 .Where((txs) => txs.Status == status && txs.Amount <= amount)
                 .OrderByDescending(tx => tx.Amount);
-            if (!transaction.Any())
-            {
-                throw new InvalidOperationException(ExceptionMessages.NoTransactionInCollectionMessage);
-            }
-            //TODO
+
             return transaction;
         }
 
