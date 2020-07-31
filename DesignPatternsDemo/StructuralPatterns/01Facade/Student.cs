@@ -6,7 +6,6 @@
         {
             this.Name = name;
         }
-
         public string Name { get; private set; }
     }
 }
