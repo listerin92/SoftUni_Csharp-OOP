@@ -4,10 +4,10 @@ namespace _03TemplatePattern
 {
     public abstract class Bread
     {
-        public abstract void MixIngredients();
-        public abstract void Bake();
+        protected abstract void MixIngredients();
+        protected abstract void Bake();
 
-        public virtual void Slice()
+        protected virtual void Slice()
         {
             Console.WriteLine("Slicing the " + GetType().Name + "bread!");
         }
