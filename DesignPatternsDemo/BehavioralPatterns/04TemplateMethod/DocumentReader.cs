@@ -22,6 +22,5 @@ namespace TemplateMethod
             this.InterpretDocumentFormat();
             this.Open();
         }
-
     }
 }

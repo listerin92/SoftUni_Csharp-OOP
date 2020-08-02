@@ -1,4 +1,4 @@
-﻿namespace Singleton
+﻿namespace _01Singleton
 {
     public class Logger
     {

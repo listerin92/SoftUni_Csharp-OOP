@@ -5,7 +5,7 @@ namespace Composite
 {
     public class Supervisor : IEmployee
     {
-        private List<IEmployee> listSubordinates;
+        private readonly List<IEmployee> listSubordinates;
 
         public Supervisor()
         {

@@ -7,12 +7,12 @@ namespace TemplateMethod
         public static void Main()
         {
             Console.WriteLine("---- Document Reader - PDF doc ----");
-            DocumentReader documenteReader = new PDFDocument();
-            documenteReader.OpenDocument();
+            DocumentReader documentReader = new PDFDocument();
+            documentReader.OpenDocument();
 
             Console.WriteLine("---- Document Reader - RTF doc ----");
-            documenteReader = new RTFDocument();
-            documenteReader.OpenDocument();
+            documentReader = new RTFDocument();
+            documentReader.OpenDocument();
         }
     }
 }
